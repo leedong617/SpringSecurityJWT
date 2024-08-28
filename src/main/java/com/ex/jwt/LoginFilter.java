@@ -15,18 +15,15 @@ import com.ex.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 	
 	private final AuthenticationManager authenticationManager;
 	//JWTUtil 주입
 	private final JWTUtil jwtUtil;
 	
-	public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
-		
-		this.authenticationManager = authenticationManager;
-		this.jwtUtil = jwtUtil;
-	}
 	
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		//클라이언트 요청에서 username, password 추출
@@ -53,7 +50,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
     	
     	String role = auth.getAuthority();
     	
-    	String token = jwtUtil.createJwt(username, role, 60*60*10L);
+    	String token = jwtUtil.createJwt(username, role, 60*60*100L);
     	/*
     	 * HTTP 인증 방식은 RFC 7235 정의에 따라 아래 인증 헤더 형태를 가져야 한다.
 

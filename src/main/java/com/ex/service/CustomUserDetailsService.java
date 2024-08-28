@@ -16,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	// 조회
         UserEntity userData = userRepository.findByUsername(username);
-
+        
         if (userData != null) {
-
+        	//UserDetails에 담아서 return하면 AutneticationManager가 검증 함
             return new CustomUserDetails(userData);
         }
 
